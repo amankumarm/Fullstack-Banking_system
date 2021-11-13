@@ -1,5 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
+import { BACKEND_URL } from "./constants"
 const Login=()=>{
    const [userId,setuserId]=useState("")
    const [password,setpassword]=useState("")
@@ -8,9 +9,16 @@ const Login=()=>{
    }
    const handleSubmit=()=>{
       console.log(password,userId)
-      axios.get("/api/login")
+      axios.get(`${BACKEND_URL}/loginDetails`)
       .then(res=>{
          console.log(res)
+
+         axios.get(`${BACKEND_URL}/getroute`)
+         .then(res=>{
+            console.log(res)
+         })
+         .catch(err=>{console.log(err)})
+      
       })
       .catch(err=>{console.log(err)})
    }
