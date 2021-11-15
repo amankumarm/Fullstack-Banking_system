@@ -1,10 +1,11 @@
 from flask import Flask,request,Response
 from flask_cors import CORS
 import psycopg2
+import flask
 import json
 app=Flask(__name__)
 CORS(app)
-@app.route("/loginDetails")
+@app.route("/login")
 def root():
     conn = None
     commands=["SELECT * FROM login;"]
@@ -20,9 +21,10 @@ def root():
             result=cur.fetchone()
         cur.close()
         conn.commit()
-        response = Response()
+        response = flask.Response(json.dumps({"op":result}))
         response.headers["Authtoken"] = "gerg"
-        return json.dumps({"op":result})
+        # response.body=
+        return response
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
