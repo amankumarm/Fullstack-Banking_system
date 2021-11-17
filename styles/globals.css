@@ -14,3 +14,54 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.bankDetails{
+padding: 2em 10em;
+outline: 1px solid red;
+}
+.Details-Nav{
+  border-radius: 5px;
+  padding:10px;
+}
+.bankListParent{
+padding:12px 10em;
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between;
+}
+.bankListParent:nth-child(even){
+  background-color: rgba(128, 128, 128, 0.219);
+}
+
+/*  Customer pages */
+
+.test{
+  /* outline: 2px solid red; */
+}
+.cust-home{
+  display:flex;
+  flex-direction: row;
+  padding: 2em 4em;
+  outline: 2px solid red;
+  height: 90vh;
+}
+.cust-details{
+  flex-grow: 0.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cust-inner-right{
+  flex-grow: 0.36;
+
+}
+.custTransactionDetails{
+padding-left: 2em;
+}
+.trans_micro{
+  outline:1px solid grey;
+  padding:0em 1em;
+}
+.cust-Actions{
+  padding-left: 2em;
+}
