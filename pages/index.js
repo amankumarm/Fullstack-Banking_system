@@ -1,33 +1,48 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import axios from "axios"
 import { BACKEND_URL } from "./constants"
+import Router from 'next/router'
+
 const Login=()=>{
-   const [userId,setuserId]=useState("")
+   const [username,setusername]=useState("")
    const [password,setpassword]=useState("")
+   const [access, setaccess] = useState("")
+   
+   useEffect(()=>{
+      const access=localStorage.getItem("access")
+      const token=localStorage.getItem("token")
+      if(token!==null){
+         Router.push(`/${access}`)
+      }
+   },[])
+   
+   
    const handleChange=(event,setter)=>{
       setter(event.target.value)
    }
    const handleSubmit=()=>{
-      console.log(password,userId)
-      axios.get(`${BACKEND_URL}/loginDetails`)
+      console.log(password,username)
+      axios.post(`/api/login`,{username,password})
       .then(res=>{
-         console.log(res)
+         if (res.status===200) {
+            const {data}=res
+            localStorage.setItem("token",data.token)
+            localStorage.setItem("access",data.access)
+            Router.push(`/${data.access}`)
+         }
+         else{
+            alert("wrong password")
+         }
 
-         axios.get(`${BACKEND_URL}/getroute`)
-         .then(res=>{
-            console.log(res)
-         })
-         .catch(err=>{console.log(err)})
-      
       })
       .catch(err=>{console.log(err)})
    }
    return (
       <>
-      <label htmlFor="userid">Userid</label><br/>
-      <input type="text" id="userid" onChange={e=>handleChange(e,setuserId)}/><br/>
+      <label htmlFor="username">Username</label><br/>
+      <input type="text" id="username" onChange={e=>handleChange(e,setusername)}/><br/>
       <label htmlFor="pass">Password</label><br/>
-      <input type="pass" id="pass" onChange={e=>handleChange(e,setpassword)}/>
+      <input type="password" id="pass" onChange={e=>handleChange(e,setpassword)}/>
       <br/>
       <button onClick={handleSubmit}>Submit</button>
       </>

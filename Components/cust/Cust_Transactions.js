@@ -1,5 +1,5 @@
-import Transaction_micro from "./micro/transaction_micro"
-import data from "./micro/transactions.json"
+import Transaction_micro from "../micro/transaction_micro"
+import data from "../micro/transactions.json"
 function Cust_Transactions() {
     return (
 

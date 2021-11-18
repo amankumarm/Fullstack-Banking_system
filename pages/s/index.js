@@ -2,13 +2,13 @@ import {useState} from 'react'
 import { Navbar,Nav,Container } from "react-bootstrap"
 import style from "../../styles/s.module.css"
 import BankDetails from '../../Components/bankDetails'
-import CustomerDetails from "../../Components/customersDetails"
+import CustomerDetails from "../../Components/cust/customersDetails"
 const superUser=()=>{
   const [pageValue, setpageValue] = useState(-1)
   const handlePagination=(e)=>{
     setpageValue(e.target.getAttribute('value'))
   }   
-
+  
   if (pageValue===-1) {
     return(
       < >

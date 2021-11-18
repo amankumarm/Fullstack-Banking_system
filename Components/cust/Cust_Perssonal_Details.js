@@ -1,5 +1,5 @@
 import React from 'react'
-import Cust_micro  from './micro/input_grp'
+import Cust_micro  from '../micro/input_grp'
 function Cust_Personal_Details() {
     const [state, setstate] = React.useState([{name:"Aman"},{branchId:"21"},{address:"Raichur"},{email:"Amankumarm441@gmail.com"},{adhaarNo:"6508-3803-4767"},{accountType:"Savings"}])
     return (

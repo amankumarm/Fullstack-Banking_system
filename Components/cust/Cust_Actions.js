@@ -1,6 +1,6 @@
 import React from 'react'
-import Checkbalance from './micro/CheckBalance';
-import SendMoneyAction from './micro/send_money';
+import Checkbalance from '../micro/CheckBalance';
+import SendMoneyAction from '../micro/send_money';
 function Cust_Actions() {
     const [show, setShow] = React.useState(false);
     const handleClose = () => setShow(false);
