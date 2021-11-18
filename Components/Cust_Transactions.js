@@ -7,7 +7,7 @@ function Cust_Transactions() {
             <h2>Transactions</h2>
             {
                 data.map((item,index)=>(
-                    <Transaction_micro to={item.to} amount={item.Amount} />
+                    <Transaction_micro to={item.to} amount={item.Amount}  key={index}/>
                 ))
             }
         </div>

@@ -64,4 +64,10 @@ padding-left: 2em;
 }
 .cust-Actions{
   padding-left: 2em;
+  display: flex;
+  justify-content: space-around;
+
+}
+.sendMoneyModal{
+  padding: 0em 2em;
 }

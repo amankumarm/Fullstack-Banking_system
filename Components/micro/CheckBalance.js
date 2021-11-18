@@ -1,13 +1,20 @@
+import {useState} from 'react'
+import {Button,Modal} from 'react-bootstrap'
 function Checkbalance() {
     const [show, setShow] = useState(false);
   
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+      //api call
+      setShow(true)
+      
+    
+    };
   
     return (
       <>
         <Button variant="primary" onClick={handleShow}>
-          Launch static backdrop modal
+          Check Balance
         </Button>
   
         <Modal
@@ -26,7 +33,6 @@ function Checkbalance() {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary">Understood</Button>
           </Modal.Footer>
         </Modal>
       </>
