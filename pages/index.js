@@ -21,11 +21,11 @@ const Login=()=>{
       setter(event.target.value)
    }
    const handleSubmit=()=>{
-      console.log(password,username)
       axios.post(`/api/login`,{username,password})
       .then(res=>{
          if (res.status===200) {
             const {data}=res
+            console.log("data",data)
             localStorage.setItem("token",data.token)
             localStorage.setItem("access",data.access)
             Router.push(`/${data.access}`)

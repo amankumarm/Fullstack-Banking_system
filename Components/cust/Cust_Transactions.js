@@ -1,6 +1,11 @@
 import Transaction_micro from "../micro/transaction_micro"
 import data from "../micro/transactions.json"
 function Cust_Transactions() {
+    const [transactions, settransactions] = useState([])
+    useEffect(() => {
+        //api request here
+        
+    }, [])
     return (
 
         <div className="custTransactionDetails test">
