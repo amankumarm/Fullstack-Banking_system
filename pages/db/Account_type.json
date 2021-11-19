@@ -1,1 +1,14 @@
-'[{"ID": 1, "Account_Type": "Savings"}, {"ID": 2, "Account_Type": "Current"}, {"ID": 3, "Account_Type": "Fixed Deposit"}]'
+[
+    {
+      "ID": 1,
+      "Account_Type": "Savings"
+    },
+    {
+      "ID": 2,
+      "Account_Type": "Current"
+    },
+    {
+      "ID": 3,
+      "Account_Type": "Fixed Deposit"
+    }
+  ]

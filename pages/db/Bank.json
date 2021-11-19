@@ -1,1 +1,32 @@
-'[{"B_Id": 1, "Branch_Name": "New York", "B_Address": "Gloria Lodge", "ISFC_Code": "VZXQGBCOLQI"}, {"B_Id": 2, "Branch_Name": "Los Angeles", "B_Address": "Barton Spur", "ISFC_Code": "LZHQGBOF90V"}, {"B_Id": 3, "Branch_Name": "Austin", "B_Address": "095 Melissa Summit Apt. 006", "ISFC_Code": "IVDHGBTXDDX"}, {"B_Id": 4, "Branch_Name": "Chicago", "B_Address": "095 Melissa Summit Apt. 006", "ISFC_Code": "ROXUGB7NBB6"}, {"B_Id": 5, "Branch_Name": "Dallas", "B_Address": "75065 Rebecca Coves Suite 644", "ISFC_Code": "FFQIGB85LUY"}]'
+[
+    {
+      "B_Id": 1,
+      "Branch_Name": "New York",
+      "B_Address": "Gloria Lodge",
+      "ISFC_Code": "VZXQGBCOLQI"
+    },
+    {
+      "B_Id": 2,
+      "Branch_Name": "Los Angeles",
+      "B_Address": "Barton Spur",
+      "ISFC_Code": "LZHQGBOF90V"
+    },
+    {
+      "B_Id": 3,
+      "Branch_Name": "Austin",
+      "B_Address": "095 Melissa Summit Apt. 006",
+      "ISFC_Code": "IVDHGBTXDDX"
+    },
+    {
+      "B_Id": 4,
+      "Branch_Name": "Chicago",
+      "B_Address": "095 Melissa Summit Apt. 006",
+      "ISFC_Code": "ROXUGB7NBB6"
+    },
+    {
+      "B_Id": 5,
+      "Branch_Name": "Dallas",
+      "B_Address": "75065 Rebecca Coves Suite 644",
+      "ISFC_Code": "FFQIGB85LUY"
+    }
+  ]
