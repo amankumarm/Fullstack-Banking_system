@@ -10,7 +10,7 @@ CREATE TABLE Bank(B_Id int primary key, Branch_Name varchar(30), B_Address varch
 
 CREATE TABLE Account_type(ID int NOT NULL UNIQUE PRIMARY KEY  , Account_Type varchar(30));
 
-CREATE TABLE USer_Transactions(Transaction_id int NOT NULL primary key, To_Cid varchar(50), From_Cid varchar(50), Date_Time DATE, Transaction_Status int);
+CREATE TABLE USer_Transactions(Transaction_id int NOT NULL  primary key, To_Cid varchar(50), From_Cid varchar(50), Date_Time DATE, Transaction_Status int);
 
 CREATE TABLE Credit_Card(C_id varchar(50), Credit_Card_No bigint primary key, Card_Expiry_Date timestamp, Credit_Score int, Credit_Card_Provider varchar(50), Credit_Card_Security_Number int NOT NULL);
 

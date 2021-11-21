@@ -19,6 +19,5 @@ export default function login(req,res){
     })
     .catch(api_err=>console.error(api_err))
     
-
     
 }

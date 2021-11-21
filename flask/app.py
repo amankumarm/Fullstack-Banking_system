@@ -46,16 +46,50 @@ def custDetails(custid):
         cur.close()
         conn.commit()
         response = flask.Response(json.dumps({"op":result}))
-        response.headers["Authtoken"] = "gerg"
         return response
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        return error
     finally:
         if conn is not None:
             conn.close()
     print(result)
     return json.dumps(result)
 
-    
+@app.route("/getusername/<username>",methods=['GET'])
+def get_username(username):
+        try:
+            conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+            cur = conn.cursor()
+            cur.execute(f"select customer_name from customer where C_id='{username}'")
+            result=cur.fetchone()
+            cur.close()
+            conn.commit()
+            response = flask.Response(json.dumps({"op":result}))
+            return response
+        except (Exception, psycopg2.DatabaseError) as error:
+            return error
+        finally:
+            if conn is not None:
+                conn.close()
+
+
+@app.route("/getAccountBalance/<cid>",methods=['GET'])
+def get_AccountBalance(cid):
+        try:
+            conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+            cur = conn.cursor()
+            cur.execute(f"select acc_balance from customer where C_id='{cid}'")
+            result=cur.fetchone()
+            cur.close()
+            conn.commit()
+            response = flask.Response(json.dumps({"op":result}))
+            return response
+        except (Exception, psycopg2.DatabaseError) as error:
+            return error
+        finally:
+            if conn is not None:
+                conn.close()
+
+
 if __name__=="__main__":
     app.run(debug=True)

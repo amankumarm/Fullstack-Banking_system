@@ -8,10 +8,11 @@ import {BACKEND_URL} from '../../pages/constants'
 function CustomerDetails() {
     const [token, settoken] = React.useState(null)
     const [access, setaccess] = React.useState(null)
+    const [signedinas,setsignedinas]=React.useState(null)
     React.useEffect(() => {
         settoken(localStorage.getItem("token"))
         setaccess(localStorage.getItem("access"))
-    }, [])
+    }, [token,access])
 
 
     if (token===null || access===null) {
@@ -20,12 +21,12 @@ function CustomerDetails() {
     } else {      
         
         return (<>
-                <Cust_Navbar />
+                <Cust_Navbar token={token}/>
                     <div className="cust-home">
                         <Cust_Personal_Details />
                         <div className="cust-inner-right test">
                         <Cust_Transactions/>
-                        <Cust_Actions /> 
+                        <Cust_Actions token={token}/> 
                         </div>
                     </div>
                 </>

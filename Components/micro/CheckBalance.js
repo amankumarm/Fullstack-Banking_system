@@ -1,14 +1,19 @@
 import {useState} from 'react'
 import {Button,Modal} from 'react-bootstrap'
-function Checkbalance() {
+import axios from "axios"
+import {BACKEND_URL} from "../../pages/constants"
+function Checkbalance({token}) {
     const [show, setShow] = useState(false);
-  
+  const [Amount, setAmount] = useState("Loading")
     const handleClose = () => setShow(false);
     const handleShow = () => {
-      //api call
+      axios.get(`${BACKEND_URL}/getAccountBalance/${token}`)
+      .then(res=>{
+        setAmount(res.data.op[0])
+      })
+      .catch(err=>console.log(err))
       setShow(true)
       
-    
     };
   
     return (
@@ -27,7 +32,7 @@ function Checkbalance() {
             <Modal.Title>Account Balanace</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-              Balanace - Rs: 12,000
+              Balanace - Rs: {Amount}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

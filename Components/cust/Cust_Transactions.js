@@ -1,8 +1,9 @@
 import Transaction_micro from "../micro/transaction_micro"
 import data from "../micro/transactions.json"
+import React from "react"
 function Cust_Transactions() {
-    const [transactions, settransactions] = useState([])
-    useEffect(() => {
+    const [transactions, settransactions] = React.useState([])
+    React.useEffect(() => {
         //api request here
         
     }, [])
