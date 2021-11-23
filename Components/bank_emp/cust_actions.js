@@ -26,8 +26,17 @@ function BE_CustActions({token}) {
     }
 
     const Add_newuser=()=>{
-        axios.post(`${BACKEND_URL}/b/addNewUser`,{user_details})
-        .then(res=>{console.log(res)})
+        axios.post(`${BACKEND_URL}/b/addNewUser`,{...user_details,token})
+        .then(res=>{
+            const op=res.data.op[0]
+            if (op===1) {
+                alert("user added")
+            }
+            else{
+                alert("an error occured.Try Again later")
+            }
+            Add_handleClose()
+        })
         .catch(err=>console.log(err))
         console.log(user_details)
     }
