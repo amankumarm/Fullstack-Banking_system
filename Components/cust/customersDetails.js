@@ -21,7 +21,7 @@ function CustomerDetails() {
     } else {      
         
         return (<>
-                <Cust_Navbar token={token}/>
+                <Cust_Navbar user={access} token={token}/>
                     <div className="cust-home">
                         <Cust_Personal_Details />
                         <div className="cust-inner-right test">

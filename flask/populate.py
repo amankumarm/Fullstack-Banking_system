@@ -38,21 +38,21 @@ import random
 # conn.commit()
 
 
-# # js_ip=[]
-# # with open("../pages/db/loantype.json", 'r') as j:
-# #      contents = json.loads(j.read())
-# #      js_ip=contents
-# # conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
-# # cur=conn.cursor()
+js_ip=[]
+with open("../pages/db/Employee.json", 'r') as j:
+     contents = json.loads(j.read())
+     js_ip=contents
+conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+cur=conn.cursor()
 
-# # print(js_ip[0])
-# # for i in js_ip:
-# #     cur.execute(f"insert into loan_type(id,l_type) values('{i['ID']}','{i['Loan_Type']}');")
+print(js_ip[0])
+for i in js_ip:
+    cur.execute(f"insert into employee(id,l_type) values('{i['ID']}','{i['Loan_Type']}');")
     
-# # cur.execute("select * from loan_type;")
-# # print(cur.fetchall())
-# # cur.close()
-# # conn.commit()
+cur.execute("select * from loan_type;")
+print(cur.fetchall())
+cur.close()
+conn.commit()
 
 
 

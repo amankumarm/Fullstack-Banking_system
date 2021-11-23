@@ -1,8 +1,11 @@
+from typing import ValuesView
 from flask import Flask,request,Response
 from flask_cors import CORS
 import psycopg2
 import flask
+import uuid
 import json
+import string, random
 app=Flask(__name__)
 CORS(app)
 @app.route("/login",methods=['POST' ])
@@ -23,7 +26,6 @@ def root():
         cur.close()
         conn.commit()
         response = flask.Response(json.dumps({"op":result}))
-        response.headers["Authtoken"] = "gerg"
         return response
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -55,22 +57,61 @@ def custDetails(custid):
     print(result)
     return json.dumps(result)
 
-@app.route("/getusername/<username>",methods=['GET'])
-def get_username(username):
-        try:
-            conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
-            cur = conn.cursor()
-            cur.execute(f"select customer_name from customer where C_id='{username}'")
-            result=cur.fetchone()
-            cur.close()
-            conn.commit()
-            response = flask.Response(json.dumps({"op":result}))
-            return response
-        except (Exception, psycopg2.DatabaseError) as error:
-            return error
-        finally:
-            if conn is not None:
-                conn.close()
+# @app.route("/getusername/<username>",methods=['GET'])
+# def get_username(username):
+#         try:
+#             conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+#             cur = conn.cursor()
+#             cur.execute(f"select customer_name from customer where C_id='{username}'")
+#             result=cur.fetchone()
+#             cur.close()
+#             conn.commit()
+#             response = flask.Response(json.dumps({"op":result}))
+#             return response
+#         except (Exception, psycopg2.DatabaseError) as error:
+#             return error
+#         finally:
+#             if conn is not None:
+#                 conn.close()
+@app.route("/getusername/<user>/<username>",methods=['GET'])
+def get_emp_username(user,username):
+        print(user,username,type(user),type(username))
+        if (user=='b'):
+            statement=f"select employee_name from employee where id='{username}';"  
+            try:
+                conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+                cur = conn.cursor()
+                cur.execute(statement)
+                result=cur.fetchone()
+                cur.close()
+                conn.commit()
+                response = flask.Response(json.dumps({"op":result}))
+                return response
+            except (Exception, psycopg2.DatabaseError) as error:
+                return error
+            finally:
+                if conn is not None:
+                    conn.close()
+        elif (user=='c'):
+            print("c")
+            statement=f"select customer_name from customer where C_id='{username}';"
+            try:
+                conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+                cur = conn.cursor()
+                cur.execute(statement)
+                result=cur.fetchone()
+                cur.close()
+                conn.commit()
+                response = flask.Response(json.dumps({"op":result}))
+                return response
+            except (Exception, psycopg2.DatabaseError) as error:
+                return error
+            finally:
+                if conn is not None:
+                    conn.close()  
+        
+        return "op"
+        
 
 
 @app.route("/getAccountBalance/<cid>",methods=['GET'])
@@ -89,6 +130,78 @@ def get_AccountBalance(cid):
         finally:
             if conn is not None:
                 conn.close()
+
+
+
+@app.route('/b/getCustomerDetails',methods=['POST'])
+def getCustomerDetail():
+    body = request.get_json()
+    try:
+        conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+        cur = conn.cursor()
+        cur.execute(f"select customer_name,age,acc_no,customer_address,acc_balance,aadhar_no,acc_status,ac.account_type from customer  as c, account_type as ac where b_id in (select b_id from employee where id='{body['token']}') and c.account_type=id;")
+        result=cur.fetchall()
+        cur.close()
+        conn.commit()
+        response = flask.Response(json.dumps({"op":result}))
+        return response
+    except (Exception, psycopg2.DatabaseError) as error:
+        return error
+    finally:
+        if conn is not None:
+            conn.close()
+    return "q"
+
+
+@app.route('/b/addNewUser',methods=['POST'])
+def addNewUser():                   # incomplete
+    newUserObject = request.get_json()
+    # print(newUserObject['token'])
+    # newUserObject[]
+    try:
+        conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+        cur = conn.cursor()
+        cur.execute(f"select b_id from employee where id='{newUserObject['token']}';")
+        result=cur.fetchone()
+        newUserObject['b_id']=result[0]
+        f=0
+        while f==0:
+            x = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16))
+            x=str(x)
+            cur.execute(f"select acc_no from customer where acc_no='{x}'")
+            result=cur.fetchone()
+            if result==None:
+                f=1
+                newUserObject['acc_no']=x
+        g=0
+        while g==0:
+            new_cid=str(uuid.uuid4())
+            cur.execute(f"select c_id from customer where c_id='{new_cid}'")
+            result=cur.fetchone()
+            if result==None:
+                g=1
+                newUserObject['c_id']=new_cid
+        vals=(str(newUserObject['Name']), str(newUserObject['Age']),str(newUserObject['acc_no']),str(newUserObject['c_id']),str(newUserObject['Address']),'0',str(newUserObject['AdhaarNo']),str(newUserObject['b_id']),'Present',str(newUserObject['acctype']),)
+        print(vals)
+        cur.execute("INSERT INTO CUSTOMER VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",vals)
+        result=cur.fetchall()
+        conn.commit()
+        cur.close()
+        print("Aman")
+        response = flask.Response(json.dumps({"op":vals}))
+        return response
+    except (Exception, psycopg2.DatabaseError) as error:
+        return error
+    finally:
+            if conn is not None:
+                conn.close()
+
+
+@app.route('/b/addNewLoan',methods=['POST'])
+def addLoan():
+    newLoanObject = request.get_json()
+    return "shit"
+
 
 
 if __name__=="__main__":
