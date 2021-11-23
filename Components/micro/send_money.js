@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button,Modal,FormControl,InputGroup} from 'react-bootstrap'
-
+import axios from 'axios'
+import { BACKEND_URL } from '../../pages/constants'
 function SendMoneyAction() {
     const [sendMoneyModal, setsendMoneyModal] = React.useState(false)
     const [amount, setAmount] = React.useState(0)
@@ -10,6 +11,7 @@ function SendMoneyAction() {
     const sendMoneyModalShow = () =>{setsendMoneyModal(true)};
     const sendMoneyAction=()=>{
         //api call here
+        axios.post(`${BACKEND_URL}/c/`)
         console.log(toAccountNumber,amount)
         setsendMoneyModal(false)
     }

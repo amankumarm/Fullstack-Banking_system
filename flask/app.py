@@ -38,6 +38,32 @@ def root():
 
 
 
+@app.route('/c/sendMoney',methods=['POST'])
+def sendMoney():
+    inc_obj=request.get_json()
+    #check Balance 
+    try:
+        conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+        cur = conn.cursor()
+        cur.execute(f"select acc_balance from customer c_id='{inc_obj['cust_id']}';")
+        result=cur.fetchone()[0]
+        if(inc_obj['sendingMoney']>result):
+            response = flask.Response(json.dumps({"op":[" Not enough Balance "]}))
+            return response
+        
+        cur.execute(f"select acc_no from customer acc_no='{inc_obj['acc_no']}';")
+            # check for existing acc 
+            # send money add this detail to transaction table
+        conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        return error
+    finally:
+        if conn is not None:
+            conn.close()
+
+
+
+
 @app.route("/customerDetails/<custid>",methods=['GET'])
 def custDetails(custid):
     try:
