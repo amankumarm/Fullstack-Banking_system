@@ -49,9 +49,20 @@ function BE_CustActions({token}) {
     }
 
     const Gen_handleSubmit=()=>{
-        // axios.post(`${BACKEND_URL}/b/addNewUser`,{user_details})
-        // .then(res=>{console.log(res)})
-        // .catch(err=>console.log(err))
+        axios.post(`${BACKEND_URL}/b/addNewLoan`,{loan_details})
+        .then(res=>{
+            const op=res.data.op[0]
+
+            if (op===1) {
+                alert("user added")
+            }
+            else{
+                alert("an error occured.Try Again later")
+            }
+                Gen_handleClose()
+
+        })
+        .catch(err=>console.log(err))
         console.log(JSON.stringify(loan_details))
     }
     
@@ -124,10 +135,10 @@ function BE_CustActions({token}) {
 
                             <label htmlFor="lt">Loan Type</label><br/>
 
-                            <input className="ip-grp" id="Address" name="loantype" value="Personal" type="radio" onChange={e=>setloandetails(e)} /> Personal<br/>
-                            <input className="ip-grp" id="Address" name="loantype" value="Home" type="radio" onChange={e=>setloandetails(e)} /> Home<br/>
-                            <input className="ip-grp" id="Address" name="loantype" value="Education" type="radio" onChange={e=>setloandetails(e)} />Education<br/>
-                            <input className="ip-grp" id="Address" name="loantype" value="Car"  type="radio" onChange={e=>setloandetails(e)} /> Car<br/>
+                            <input className="ip-grp" id="Address" name="loantype" value="2" type="radio" onChange={e=>setloandetails(e)} /> Personal<br/>
+                            <input className="ip-grp" id="Address" name="loantype" value="1" type="radio" onChange={e=>setloandetails(e)} /> Home<br/>
+                            <input className="ip-grp" id="Address" name="loantype" value="4" type="radio" onChange={e=>setloandetails(e)} />Education<br/>
+                            <input className="ip-grp" id="Address" name="loantype" value="3"  type="radio" onChange={e=>setloandetails(e)} /> Car<br/>
 
                         </Modal.Body>
                         <Modal.Footer>

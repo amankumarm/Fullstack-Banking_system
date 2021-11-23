@@ -215,9 +215,29 @@ def addNewUser():                   # incomplete
 @app.route('/b/addNewLoan',methods=['POST'])
 def addLoan():
     newLoanObject = request.get_json()
-    
-
-
+    try:
+        conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+        cur = conn.cursor()
+        cur.execute(f"select * from loan;")
+        result=cur.fetchall()
+        newLoanObject['newLoanId']=len(result)+1
+        cur.execute(f"select c_id from customer where acc_no='{newLoanObject['accno']}';")
+        newLoanObject['c_id']=cur.fetchone()[0]
+        cur.execute(f"select id from employee where id='{newLoanObject['token']}';")
+        newLoanObject['emp_id']=cur.fetchone()[0]
+        print(newLoanObject) 
+        cur.execute(f"insert into loan values('{newLoanObject['newLoanId']}','{newLoanObject['c_id']}','{newLoanObject['emp_id']}','{newLoanObject['Amount']}','{newLoanObject['int']}','Ongoing','{newLoanObject['loantype']}','{newLoanObject['Dur']}')")
+        cur.close()
+        conn.commit()
+        response = flask.Response(json.dumps({"op":[1]}))
+        return response
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+        response = flask.Response(json.dumps({"op":[0]}))
+        return response
+    finally:
+        if conn is not None:
+            conn.close()
 
 if __name__=="__main__":
     app.run(debug=True)
