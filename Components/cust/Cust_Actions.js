@@ -6,7 +6,7 @@ function Cust_Actions({token}) {
             <h2 style={{paddingLeft:1+"em"}}>Actions</h2>
                 <div className="cust-Actions test">
                 <Checkbalance  token={token}/>    
-                <SendMoneyAction  token/>
+                <SendMoneyAction  token={token}/>
             
         </div>
         </>

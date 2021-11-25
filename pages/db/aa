@@ -26,3 +26,17 @@ alter table Loan add constraint fk_customer foreign key(C_id) references Custome
 alter table Loan add constraint fk_emplyoee foreign key(Emp_id) references Employee(ID);
 alter table Loan add constraint fk_loantype foreign key(Loan_Type) references loan_type(ID);
 
+alter table customer ADD CHECK (Age>=10)
+
+alter table employee ADD CHECK (Age>=18);
+
+alter table loan ADD CHECK (Loan_Id>=0);
+
+alter table loan_type ADD CHECK (ID>0);
+
+alter table Bank ADD CHECK (B_Id>0);
+
+alter table Account_Type ADD CHECK (ID>0);
+
+alter table USer_Transactions ADD CHECK (Transaction_id>0);
+

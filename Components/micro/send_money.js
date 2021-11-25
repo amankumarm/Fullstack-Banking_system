@@ -2,19 +2,36 @@ import React from 'react'
 import {Button,Modal,FormControl,InputGroup} from 'react-bootstrap'
 import axios from 'axios'
 import { BACKEND_URL } from '../../pages/constants'
-function SendMoneyAction() {
+function SendMoneyAction({token}) {
     const [sendMoneyModal, setsendMoneyModal] = React.useState(false)
     const [amount, setAmount] = React.useState(0)
-    const [toAccountNumber, settoAccountNumber] = React.useState(0)
-    
+    const [toAccountNumber, settoAccountNumber] = React.useState("")
+    const d=new window.Date()
+    const Date=`${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}` 
+    const nullify=()=>{setAmount({});settoAccountNumber({})}
     const sendMoneyModalClose = () => setsendMoneyModal(false);
     const sendMoneyModalShow = () =>{setsendMoneyModal(true)};
     const sendMoneyAction=()=>{
         //api call here
-        axios.post(`${BACKEND_URL}/c/`)
+
+        if (amount<=0) {
+            alert("Please enter a valid amount")
+            console.log(amount,toAccountNumber)
+            nullify()
+        }
+        else if (toAccountNumber.length!==18) {
+            alert("Please enter a valid Account Number")
+            console.log(amount,toAccountNumber)
+            nullify()
+        }
+        else{
+        axios.post(`${BACKEND_URL}/c/initiateTransaction`,{toAccountNumber,amount,Date,token})
+        .then(res=>console.log(res))
+        .catch(err=>console.log(err))
         console.log(toAccountNumber,amount)
         setsendMoneyModal(false)
     }
+}
     return (
         <div>
           <>

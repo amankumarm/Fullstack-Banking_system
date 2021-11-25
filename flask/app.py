@@ -1,5 +1,6 @@
 from typing import ValuesView
 from flask import Flask,request,Response
+from psycopg2.extensions import NoneAdapter
 from flask_cors import CORS
 import psycopg2
 import flask
@@ -264,6 +265,48 @@ def addLoan():
     finally:
         if conn is not None:
             conn.close()
+
+@app.route('/c/initiateTransaction',methods=['POST'])
+def initTransaction():
+    req_body=request.get_json()
+    print(req_body)
+    try:
+        conn = psycopg2.connect(host="localhost",database="dbms",user="postgres",password="amankumarm")
+        conn.autocommit=True
+        cur = conn.cursor()
+        cur.execute("begin")
+    # check whether the acc exist
+        cur.execute(f"select c_id from customer where acc_no='{req_body['toAccountNumber']}';")
+        toAcc_cid=cur.fetchone()
+        if toAcc_cid==None:
+            response = flask.Response(json.dumps({"op":[1],"msg":"The account doesnt exist."}))
+            return response
+        #check the balance 
+        cur.execute(f"select acc_balance from customer where c_id='{req_body['token']}';")
+        balance=cur.fetchone()[0]
+        if balance<int(req_body['amount']):
+            response = flask.Response(json.dumps({"op":[1],"msg":"not enough balance"}))
+            return response
+        # every thing okay send money
+        sendersNewBalance=balance-int(req_body['amount'])
+        cur.execute("""update customer set acc_balance=acc_balance-%s where c_id=%s;""",(req_body['amount'],req_body['token']))
+        cur.execute("update customer set acc_balance=acc_balance + %s where c_id=%s;",(req_body['amount'],req_body['toAccountNumber']))
+        cur.execute("select * from user_transactions;")
+        new_transaction_id=len(cur.fetchall())
+        print(new_transaction_id)
+        cur.execute("""insert into user_transactions(to_cid,from_cid,date_time,transaction_status,amount,id) values(%s,%s,%s,%s,%s,%s);""",(toAcc_cid,req_body['token'],req_body['Date'],'1',req_body['Amount'],new_transaction_id))
+        conn.commit()
+        
+        response = flask.Response(json.dumps({"op":[1],"msg":"done"}))
+        return response
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+        response = flask.Response(json.dumps({"op":[0]}))
+        return response
+    finally:
+        if conn is not None:
+            conn.close()
+
 
 if __name__=="__main__":
     app.run(debug=True)

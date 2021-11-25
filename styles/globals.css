@@ -87,3 +87,10 @@ padding-left: 2em;
 .ip-grp{
   margin-top:2em;
 }
+
+/*=== JSS used ===*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
