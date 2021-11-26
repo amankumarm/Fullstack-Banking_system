@@ -279,29 +279,30 @@ def initTransaction():
         cur.execute(f"select c_id from customer where acc_no='{req_body['toAccountNumber']}';")
         toAcc_cid=cur.fetchone()
         if toAcc_cid==None:
-            response = flask.Response(json.dumps({"op":[1],"msg":"The account doesnt exist."}))
+            response = flask.Response(json.dumps({"op":[0],"msg":"The account doesnt exist."}))
             return response
         #check the balance 
         cur.execute(f"select acc_balance from customer where c_id='{req_body['token']}';")
         balance=cur.fetchone()[0]
         if balance<int(req_body['amount']):
-            response = flask.Response(json.dumps({"op":[1],"msg":"not enough balance"}))
+            response = flask.Response(json.dumps({"op":[0],"msg":"not enough balance"}))
             return response
         # every thing okay send money
         sendersNewBalance=balance-int(req_body['amount'])
         cur.execute("""update customer set acc_balance=acc_balance-%s where c_id=%s;""",(req_body['amount'],req_body['token']))
-        cur.execute("update customer set acc_balance=acc_balance + %s where c_id=%s;",(req_body['amount'],req_body['toAccountNumber']))
+        cur.execute("""update customer set acc_balance=acc_balance+%s where c_id=%s;""",(req_body['amount'],req_body['toAccountNumber']))
         cur.execute("select * from user_transactions;")
         new_transaction_id=len(cur.fetchall())
         print(new_transaction_id)
-        cur.execute("""insert into user_transactions(to_cid,from_cid,date_time,transaction_status,amount,id) values(%s,%s,%s,%s,%s,%s);""",(toAcc_cid,req_body['token'],req_body['Date'],'1',req_body['Amount'],new_transaction_id))
+        cur.execute('commit')
         conn.commit()
+        # cur.execute("""insert into user_transactions(to_cid,from_cid,date_time,transaction_status,amount,id) values(%s,%s,%s,%s,%s,%s);""",(toAcc_cid,req_body['token'],req_body['Date'],'1',req_body['Amount'],new_transaction_id))
         
-        response = flask.Response(json.dumps({"op":[1],"msg":"done"}))
+        response = flask.Response(json.dumps({"op":[1],"msg":"Transaction Complete"}))
         return response
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-        response = flask.Response(json.dumps({"op":[0]}))
+        print("e",error)
+        response = flask.Response(json.dumps({"op":[0],"msg":"An error Occured"}))
         return response
     finally:
         if conn is not None:

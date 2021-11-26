@@ -26,7 +26,8 @@ function SendMoneyAction({token}) {
         }
         else{
         axios.post(`${BACKEND_URL}/c/initiateTransaction`,{toAccountNumber,amount,Date,token})
-        .then(res=>console.log(res))
+        .then(res=>{console.log(res)
+            alert(res.data.msg)})
         .catch(err=>console.log(err))
         console.log(toAccountNumber,amount)
         setsendMoneyModal(false)

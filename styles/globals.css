@@ -94,3 +94,35 @@ body {
   margin: 0;
   font-family: 'Inter', sans-serif;
 }
+
+.navbarImage{
+  width: 30px;
+  height: 60px;
+}
+.loginContainer{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginInner{
+  width:25%;
+  padding: 5px;
+}
+#username{
+  width: 100%;
+  padding: 5px;
+  margin:5px 0px;
+}
+#pass{
+  width: 100%;
+  padding: 5px;
+  margin:5px 0px;
+
+}
+.loginBtn{
+  margin-top: 5px;
+  width: 100%;
+  align-items: center;
+}

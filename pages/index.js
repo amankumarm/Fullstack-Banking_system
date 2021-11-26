@@ -2,7 +2,8 @@ import { useState,useEffect } from "react"
 import axios from "axios"
 import { BACKEND_URL } from "./constants"
 import Router from 'next/router'
-
+import {Button} from 'react-bootstrap'
+ 
 const Login=()=>{
    const [username,setusername]=useState("")
    const [password,setpassword]=useState("")
@@ -38,14 +39,16 @@ const Login=()=>{
       .catch(err=>{console.log(err)})
    }
    return (
-      <>
-      <label htmlFor="username">Username</label><br/>
-      <input type="text" id="username" onChange={e=>handleChange(e,setusername)}/><br/>
-      <label htmlFor="pass">Password</label><br/>
-      <input type="password" id="pass" onChange={e=>handleChange(e,setpassword)}/>
-      <br/>
-      <button onClick={handleSubmit}>Submit</button>
-      </>
+      <div className="loginContainer">
+         <div className="loginInner">
+            <label htmlFor="username">Username</label><br/>
+            <input type="text" id="username" onChange={e=>handleChange(e,setusername)}/><br/>
+            <label htmlFor="pass">Password</label><br/>
+            <input type="password" id="pass" onChange={e=>handleChange(e,setpassword)}/>
+            <br/>
+            <Button onClick={handleSubmit}  className="loginBtn" variant='outline-success'>Submit</Button>
+         </div>
+      </div>
    )
 }
 export default Login

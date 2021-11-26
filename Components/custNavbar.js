@@ -3,7 +3,8 @@ import { Navbar,Nav,Container,Button } from "react-bootstrap"
 import {BACKEND_URL} from "../pages/constants"
 import axios from "axios"
 import Router from 'next/router'
-
+import Image from 'next/image'
+import Download from '../public/download.png'
 function Cust_Navbar({token,user}) {
   const [username, setusername] = useState("loading...")
   useEffect(()=>{
@@ -25,7 +26,7 @@ function Cust_Navbar({token,user}) {
         <div>
               <Navbar>
   <Container>
-    <Navbar.Brand href="">Bank of India</Navbar.Brand>
+    <Navbar.Brand href=""><Image src={Download}  width={150} height={100}/></Navbar.Brand>
     <Navbar.Toggle />
     <Navbar.Collapse className="justify-content-end">
       <Navbar.Text>
